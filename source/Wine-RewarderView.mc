@@ -2,19 +2,45 @@ import Toybox.Graphics;
 import Toybox.WatchUi;
 import Toybox.ActivityMonitor;
 import Toybox.UserProfile;
+import Toybox.Application;
+import Toybox.Application.Storage;
 using Toybox.Time.Gregorian;
 
 class Wine_RewarderView extends WatchUi.View {
     private var _glasses_earned;
+    private var _isBeer = false;
+    private var colories_pr_glass = 127.0;
     
     function initialize() {
+        if ( Toybox.Application has :Storage ) 
+        {
+            // use Application.Storage and Application.Properties methods
+            _isBeer = Storage.getValue("isBeer");
+            if (_isBeer == null)
+            {
+                _isBeer = false;
+                Storage.setValue("isBeer", _isBeer);
+            }
+        }
+        else
+        {
+            _isBeer = false;
+        }
+
         View.initialize();
+    }
+
+    public function ChangeView(isBeer) as Void {
+        _isBeer = isBeer;
+        
+        WatchUi.requestUpdate();
+        
+        Storage.setValue("isBeer", _isBeer);
     }
 
     // Load your resources here
     function onLayout(dc as Dc) as Void {
-        setLayout(Rez.Layouts.MainLayout(dc));
-        _glasses_earned = findDrawableById("GlassesEarned");
+
     }
 
     // Called when this View is brought to the foreground. Restore
@@ -26,6 +52,17 @@ class Wine_RewarderView extends WatchUi.View {
     // Update the view
     function onUpdate(dc as Dc) as Void {
         // Call the parent onUpdate function to redraw the layout
+        if (_isBeer)
+        {
+            setLayout(Rez.Layouts.BeerLayout(dc));
+        }
+        else
+        {
+            setLayout(Rez.Layouts.MainLayout(dc));
+        }
+
+        _glasses_earned      = findDrawableById("GlassesEarned");
+
         updateGlasses();
         View.onUpdate(dc);
     }
@@ -34,6 +71,7 @@ class Wine_RewarderView extends WatchUi.View {
     // state of this View here. This includes freeing resources from
     // memory.
     function onHide() as Void {
+        Storage.setValue("isBeer", _isBeer);
     }
 
     function updateGlasses() as Void {
@@ -43,6 +81,14 @@ class Wine_RewarderView extends WatchUi.View {
         var today = Gregorian.info(Time.now(), Time.FORMAT_SHORT);
         var profileAge = today.year - profile.birthYear;
 
+        if (_isBeer)
+        {
+            colories_pr_glass = 142.0;
+        }
+        else
+        {
+            colories_pr_glass = 127;
+        }
 
         // ######################################################      
         // Calculate: Basal Metabolic Rate (BMR)
@@ -83,7 +129,7 @@ class Wine_RewarderView extends WatchUi.View {
         }       
         
 
-        var wineglasses = Math.floor(calories_surplus / 83.0).toNumber();
+        var wineglasses = Math.floor(calories_surplus / colories_pr_glass).toNumber();
 
 
         // ######################################################
