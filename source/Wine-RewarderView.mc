@@ -83,11 +83,16 @@ class Wine_RewarderView extends WatchUi.View {
 
         if (_isBeer)
         {
-            colories_pr_glass = 142.0;
+            // https://tuborg.dk/tuborg-classic/classic/
+            // 39 kcal pr 100ml --> 39 kcal * 3.3 (330ml pr can) = 128.7
+            colories_pr_glass = 128.7;
         }
         else
         {
-            colories_pr_glass = 127;
+            // DTU food data:
+            // https://frida.fooddata.dk/
+            // Redwine, unspec. 77 kcal pr 100ml --> 77 kcal * 1.5 (150ml pr glass)
+            colories_pr_glass = 115.5;
         }
 
         // ######################################################      
