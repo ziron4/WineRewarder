@@ -77,6 +77,7 @@ class Wine_RewarderView extends WatchUi.View {
     function updateGlasses() as Void {
         var profile = UserProfile.getProfile();
         var info = ActivityMonitor.getInfo();
+        var currentTime = System.getClockTime();
 
         var today = Gregorian.info(Time.now(), Time.FORMAT_SHORT);
         var profileAge = today.year - profile.birthYear;
@@ -126,8 +127,13 @@ class Wine_RewarderView extends WatchUi.View {
 
 
         // ######################################################
+        // Adjust daily calories 
+        var min_pr_day = 60.0 * 24.0;
+        var TDEE_timeadjusted = TDEE * ( ((currentTime.hour * 60.0) + currentTime.min) / min_pr_day);
+
+        // ######################################################
         // Calculate: Calories above TDEE
-        var calories_surplus = info.calories.toFloat() - TDEE;
+        var calories_surplus = info.calories.toFloat() - TDEE_timeadjusted;
         if (calories_surplus < 0)
         {
             calories_surplus = 0;
