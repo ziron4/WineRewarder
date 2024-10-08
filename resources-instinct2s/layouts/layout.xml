@@ -1,0 +1,7 @@
+<layout id="MainLayout">
+    <bitmap id="id_glass_redwine" x="right" y="center" filename="../drawables/redwine-glass.png" />
+
+    <label id="InfoText1"     x="center" y="20%"    text="@Strings.InfoText1"     color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_CENTER" />
+    <label id="GlassesEarned" x="center" y="center" text="@Strings.GlassesEarned" color="Graphics.COLOR_WHITE"   justification="Graphics.TEXT_JUSTIFY_CENTER" />
+    <label id="InfoText2"     x="center" y="55%"    text="@Strings.GlassOfWine"   color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_CENTER" />
+</layout>
