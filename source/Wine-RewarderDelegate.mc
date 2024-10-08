@@ -14,7 +14,7 @@ class Wine_RewarderDelegate extends WatchUi.BehaviorDelegate {
         isBeer = false;
     }
 
-    function onHold(clickEvent) {
+    function onSelect() {
         
         if (isBeer)
         {
