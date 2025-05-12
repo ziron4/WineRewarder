@@ -1,0 +1,7 @@
+<strings>
+    <string id="AppName">Wine-Rewarder</string>
+    <string id="InfoText1">You have earned</string>
+    <string id="GlassesEarned">0</string>
+    <string id="GlassOfWine">glasses of wine</string>
+    <string id="GlassOfBeer">glasses of beer</string>
+</strings>
